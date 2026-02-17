@@ -3,214 +3,218 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>تتبع الشحنة</title>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap');
+
         :root {
-            --primary-green: #4CAF50;
-            --light-grey: #f5f5f5;
-            --text-dark: #333;
-            --text-muted: #777;
-            --border-color: #eee;
+            --active-green: #5eb471;
+            --inactive-grey: #a0a0a0;
+            --bg-white: #ffffff;
+            --border-grey: #f0f0f0;
+            --text-black: #343a40;
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f0f0f0;
+            font-family: 'Cairo', sans-serif;
+            background-color: #e9ecef;
             display: flex;
             justify-content: center;
-            padding: 20px;
+            align-items: flex-start;
+            min-height: 100vh;
             margin: 0;
+            padding: 20px;
         }
 
-        .container {
-            background-color: white;
-            width: 100%;
-            max-width: 400px;
-            border-radius: 8px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        .phone-screen {
+            background-color: var(--bg-white);
+            width: 380px;
+            border-radius: 5px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
             overflow: hidden;
-            border-top: 6px solid #FFC107; /* الشريط الأصفر العلوي */
+            border-top: 5px solid #ffcc33; /* الشريط الأصفر العلوي */
         }
 
-        .header {
+        /* Header Area */
+        .app-bar {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 15px;
-            border-bottom: 1px solid var(--border-color);
+            padding: 15px 20px;
+            border-bottom: 1px solid var(--border-grey);
         }
 
-        .header h2 {
+        .app-bar h1 {
             font-size: 18px;
             margin: 0;
-            flex-grow: 1;
-            text-align: center;
-            color: #2c3e50;
+            color: var(--text-black);
+            font-weight: 700;
         }
 
-        /* مسار الشحنة - Stepper */
-        .tracking-section {
-            padding: 20px;
+        .icon { color: var(--text-black); font-size: 20px; cursor: pointer; }
+
+        /* Stepper Section */
+        .stepper-container {
+            padding: 30px 40px;
             position: relative;
         }
 
         .step {
             display: flex;
             align-items: flex-start;
-            margin-bottom: 15px;
+            margin-bottom: 25px;
             position: relative;
         }
 
-        .step-indicator {
-            width: 12px;
-            height: 12px;
-            background-color: var(--primary-green);
-            border-radius: 50%;
-            margin-left: 15px;
-            margin-top: 5px;
-            z-index: 2;
-        }
-
-        .step::after {
-            content: "";
+        /* الخط الواصل بين النقاط */
+        .step::before {
+            content: '';
             position: absolute;
-            right: 5.5px;
+            right: -21px;
             top: 15px;
             width: 2px;
             height: 100%;
-            background-color: #ddd;
+            background-color: #d1d1d1;
             z-index: 1;
         }
 
-        .step:last-child::after { display: none; }
+        .step:last-child::before { display: none; }
 
-        .step-info {
-            display: flex;
-            flex-direction: column;
+        .dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: #d1d1d1; /* اللون الافتراضي */
+            position: absolute;
+            right: -26px;
+            top: 6px;
+            z-index: 2;
         }
 
+        /* حالة "إنشاء الطلب" فقط خضراء */
+        .step.active .dot { background-color: var(--active-green); }
+        .step.active .step-title { color: var(--active-green); }
+
+        .step-content { display: flex; flex-direction: column; }
+
         .step-title {
-            color: var(--primary-green);
-            font-weight: bold;
             font-size: 16px;
+            font-weight: 700;
+            color: var(--inactive-grey);
+            margin-bottom: 2px;
         }
 
         .step-date {
-            font-size: 12px;
-            color: var(--text-muted);
-            margin-top: 2px;
+            font-size: 11px;
+            color: #888;
         }
 
-        /* قسم الباركود */
-        .barcode-section {
+        /* Barcode Section */
+        .barcode-area {
             text-align: center;
-            padding: 30px 10px;
-            border-top: 1px solid var(--border-color);
+            padding: 40px 20px;
+            border-top: 1px solid var(--border-grey);
         }
 
         .barcode-img {
-            width: 220px;
-            height: auto;
+            width: 75%;
+            filter: grayscale(1);
+            margin-bottom: 10px;
         }
 
-        .order-id {
-            margin-top: 10px;
-            font-weight: bold;
-            color: #2c3e50;
+        .order-number {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--text-black);
         }
 
-        /* التفاصيل السفلية */
-        .details-section {
-            padding: 0 20px;
+        /* Footer Details */
+        .info-row {
+            border-top: 1px solid var(--border-grey);
+            padding: 15px 25px;
         }
 
-        .detail-row {
-            border-top: 1px solid var(--border-color);
-            padding: 15px 0;
-            text-align: right;
+        .label {
+            font-size: 11px;
+            color: #b0b0b0;
+            margin-bottom: 4px;
+            display: block;
         }
 
-        .detail-label {
-            font-size: 12px;
-            color: #aaa;
-            margin-bottom: 5px;
+        .value {
+            font-size: 14px;
+            color: var(--text-black);
+            font-weight: 700;
         }
 
-        .detail-value {
-            font-size: 15px;
-            color: #2c3e50;
-            font-weight: bold;
-        }
+        .email { font-family: sans-serif; letter-spacing: 0.5px; }
 
-        .email-text {
-            color: #2c3e50;
-            font-family: Arial, sans-serif;
-        }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <div class="header">
-        <span style="font-size: 24px;">⋮</span>
-        <h2>شحنة رقم # 51972521</h2>
-        <span style="font-size: 20px;">〉</span>
+<div class="phone-screen">
+    <div class="app-bar">
+        <div class="icon">⋮</div>
+        <h1>شحنة رقم # 51972521</h1>
+        <div class="icon">〉</div>
     </div>
 
-    <div class="tracking-section">
-        <div class="step">
-            <div class="step-indicator"></div>
-            <div class="step-info">
+    <div class="stepper-container">
+        <div class="step active">
+            <div class="dot"></div>
+            <div class="step-content">
                 <span class="step-title">إنشاء الطلب</span>
                 <span class="step-date">تم إنشاء الطلب : الأحد، 19-أكتوبر-2025</span>
             </div>
         </div>
+
         <div class="step">
-            <div class="step-indicator"></div>
-            <div class="step-info">
+            <div class="dot"></div>
+            <div class="step-content">
                 <span class="step-title">جاري المعالجة</span>
             </div>
         </div>
+
         <div class="step">
-            <div class="step-indicator"></div>
-            <div class="step-info">
+            <div class="dot"></div>
+            <div class="step-content">
                 <span class="step-title">تحت التجهيز</span>
             </div>
         </div>
+
         <div class="step">
-            <div class="step-indicator"></div>
-            <div class="step-info">
+            <div class="dot"></div>
+            <div class="step-content">
                 <span class="step-title">تم الشحن</span>
-                <span class="step-date">جاهز منذ: الأحد، 19-أكتوبر-2025</span>
             </div>
         </div>
+
         <div class="step">
-            <div class="step-indicator"></div>
-            <div class="step-info">
+            <div class="dot"></div>
+            <div class="step-content">
                 <span class="step-title">تم التوصيل</span>
-                <span class="step-date">Delivered on: الأحد، 19-أكتوبر-2025</span>
             </div>
         </div>
     </div>
 
-    <div class="barcode-section">
-        <img src="https://bwipjs-api.metafloor.com/?bcid=code128&text=2007992813&scale=3&rotate=N&includetext=false" class="barcode-img" alt="Barcode">
-        <div class="order-id">رقم الطلب: 2007992813</div>
+    <div class="barcode-area">
+        <img src="https://bwipjs-api.metafloor.com/?bcid=code128&text=2007992813&scale=4&includetext=false" class="barcode-img">
+        <div class="order-number">رقم الطلب: 2007992813</div>
     </div>
 
-    <div class="details-section">
-        <div class="detail-row">
-            <div class="detail-label">تاريخ إنشاء الطلب</div>
-            <div class="detail-value">الأحد، 19-أكتوبر-2025</div>
-        </div>
-        <div class="detail-row">
-            <div class="detail-label">الشحن إلى:</div>
-            <div class="detail-value email-text">campus6med@gmail.com</div>
-        </div>
-        <div class="detail-row">
-            <div class="detail-label">طريقة الشحن</div>
-            <div class="detail-value">@ تسليم البريد الإلكتروني</div>
-        </div>
+    <div class="info-row">
+        <span class="label">تاريخ إنشاء الطلب</span>
+        <span class="value">الأحد، 19-أكتوبر-2025</span>
+    </div>
+
+    <div class="info-row">
+        <span class="label">الشحن إلى:</span>
+        <span class="value email">campus6med@gmail.com</span>
+    </div>
+
+    <div class="info-row">
+        <span class="label">طريقة الشحن</span>
+        <span class="value">@ تسليم البريد الإلكتروني</span>
     </div>
 </div>
 
